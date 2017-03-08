@@ -25,7 +25,7 @@ public class RaceTrack {
 
     //Constructor with String input to check which track to create
     public RaceTrack(String trackName){
-        if(trackName == "square"){
+        if(trackName == "Square"){
             //initializing the painting of the road
             road.setStroke(Color.BLACK);
             road.setStrokeWidth(75);

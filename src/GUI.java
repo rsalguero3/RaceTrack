@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -14,12 +15,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 /**
  * Created by rsalguero on 2/24/17.
  */
 public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
+        RaceTrack raceTrack = null;
         //TODO: Move this into the Car class and create constructors with 3 String inputs
         //and set Image depending on those strings, The 3 Strings will be wheels, engine, body
         ImageView car = new Car();
@@ -29,7 +36,24 @@ public class GUI extends Application {
         car.setRotate(90);
 
         //TODO: pop up window will let user pick raceTrack, hardcoding in meantime
-        RaceTrack raceTrack = new RaceTrack("square");
+        List<String> choices = new ArrayList<>();
+        choices.add("Square");
+        choices.add("Circle");
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Square", choices);
+        dialog.setTitle("Race Track");
+        dialog.setHeaderText("Race Track");
+        dialog.setContentText("Choose your Track:");
+
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            raceTrack = new RaceTrack(result.get());
+        }
+        else{
+            primaryStage.close();
+        }
+
+
         //get road path from Racetrack and place into the animation
         Path road = raceTrack.getRoad();
         PathTransition anim = new PathTransition();
