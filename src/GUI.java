@@ -35,7 +35,9 @@ public class GUI extends Application {
         car.setY(300 - car.getImage().getHeight());
         car.setRotate(90);
 
-        //TODO: pop up window will let user pick raceTrack, hardcoding in meantime
+
+
+        //pop up window will let user pick raceTrack
         List<String> choices = new ArrayList<>();
         choices.add("Square");
         choices.add("Circle");
