@@ -6,19 +6,23 @@ public class RaceTrack {
     Car[] cars;
 
     //This is just one full square path, break it up into 4 paths and name them, A, B, C, D
-    PathElement[] path =
-            {
+    PathElement[] path ={
                     new MoveTo(0, 300),
                     new ArcTo(100, 100, 0, 100, 400, false, false),
                     new LineTo(300, 400),
+
                     new ArcTo(100, 100, 0, 400, 300, false, false),
                     new LineTo(400, 100),
+
                     new ArcTo(100, 100, 0, 300, 0, false, false),
                     new LineTo(100, 0),
+
                     new ArcTo(100, 100, 0, 0, 100, false, false),
                     new LineTo(0, 300),
+
                     new ClosePath()
             };
+
     //
     Path road = new Path();
     Path divider = new Path();
