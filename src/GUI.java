@@ -7,7 +7,8 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
-import javafx.scene.image.Image;
+//import javafx.scene.image.Image;
+//import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -33,10 +34,6 @@ public class GUI extends Application {
         //TODO: Move this into the Car class and create constructors with 3 String inputs
         //and set Image depending on those strings, The 3 Strings will be wheels, engine, body
         ImageView car = new Car();
-        car.setImage(new Image("redCar.png"));
-        car.setX(-car.getImage().getWidth() / 2);
-        car.setY(300 - car.getImage().getHeight());
-        car.setRotate(90);
 
 
 
