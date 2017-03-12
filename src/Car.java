@@ -1,13 +1,14 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.List;
+
 public class Car extends ImageView{
 
     private double totalTime;
     private int totalDistance;
     private int speed;
-    private int[][] travelPath;
-    public int[][] currentLocation;
+    private List<Integer> travelPath;
     private String wheels;
     private String body;
     private String engine;
@@ -38,9 +39,5 @@ public class Car extends ImageView{
 
     public void setEngine(String engine) {
         this.engine = engine;
-    }
-
-    public int[][] getLocation(){
-        return currentLocation;
     }
 }
