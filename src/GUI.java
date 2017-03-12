@@ -33,9 +33,7 @@ public class GUI extends Application {
         RaceTrack raceTrack = null;
         //TODO: Move this into the Car class and create constructors with 3 String inputs
         //and set Image depending on those strings, The 3 Strings will be wheels, engine, body
-        ImageView car = new Car();
-
-
+        Car car = new Car("Red","Small");
 
         //pop up window will let user pick raceTrack
         List<String> choices = new ArrayList<>();
@@ -55,7 +53,6 @@ public class GUI extends Application {
             primaryStage.close();
         }
 
-
         //get road path from Racetrack and place into the animation
         Path road = raceTrack.getRoad();
         PathTransition anim = new PathTransition();
@@ -72,7 +69,7 @@ public class GUI extends Application {
         //get the divider from RaceTrack and added to the scene
         Path divider = raceTrack.getDivider();
         Group root = new Group();
-        root.getChildren().addAll(road, divider, car);
+        root.getChildren().addAll(road, divider,car);
         root.setTranslateX(50);
         root.setTranslateY(50);
 

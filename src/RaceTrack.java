@@ -1,11 +1,14 @@
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
 public class RaceTrack {
+    int numCars = 4;
     //Will hold 4 Car objects
-    Car[] cars;
+    Car[] car = new Car[numCars];
 
     //This is just one full square path, break it up into 4 paths and name them, A, B, C, D
+
     PathElement[] path ={
                     new MoveTo(0, 300),
                     new ArcTo(100, 100, 0, 100, 400, false, false),
@@ -41,8 +44,11 @@ public class RaceTrack {
             divider.getElements().addAll(path);
         }
         else{
+
             //TODO: create a circle track
         }
+
+
     }
 
     public Path getRoad() {
@@ -54,6 +60,6 @@ public class RaceTrack {
     }
 
     public Car[] getCars() {
-        return cars;
+        return car;
     }
 }
