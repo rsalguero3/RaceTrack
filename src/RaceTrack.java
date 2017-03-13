@@ -66,6 +66,19 @@ public class RaceTrack {
             Car userCar = new Car(carColor, carWheel);
             randomStops(userCar);
             cars[0] = userCar;
+
+            Car robotCar1 = new Car(carColor, carWheel);
+            cars[1] = robotCar1;
+            randomStops(robotCar1);
+
+            Car robotCar2 = new Car(carColor, carWheel);
+            cars[2] = robotCar2;
+            randomStops(robotCar2);
+
+            Car robotCar3 = new Car(carColor, carWheel);
+            cars[3] = robotCar3;
+            randomStops(robotCar3);
+
         } else {
 
             //TODO: create a circle track
