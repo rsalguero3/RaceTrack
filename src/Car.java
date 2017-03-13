@@ -1,5 +1,7 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.PathElement;
+
 import java.util.*;
 
 import java.util.List;
@@ -8,7 +10,7 @@ public class Car extends ImageView{
 
     private long timeNow;
     private int speed;
-    private List<Integer> travelPath;
+    private PathElement[][] travelPath;
     private String wheels;
     private String body;
     private String engine;
@@ -54,13 +56,13 @@ public class Car extends ImageView{
             this.setY(300 - this.getImage().getHeight());
             this.setRotate(90);
         }
-
-
-
+        this.setSpeed();
     }
-    public void setSpeed(int speed) {
-
-        this.speed = speed;
+    public void setSpeed() {
+        Random randomNum = new Random();
+        int ranNum;
+        ranNum = randomNum.nextInt(10) + 5;
+        this.speed += ranNum * 500;
     }
 
     public void setWheels(String wheels) {
@@ -82,5 +84,17 @@ public class Car extends ImageView{
         //System.out.println("Time: " + lnSystemTime);
         System.out.println("Time: " + timeNow);
 
+    }
+
+    public void setTravelPath(PathElement[][] travelPath) {
+        this.travelPath = travelPath;
+    }
+
+    public PathElement[][] getTravelPath() {
+        return travelPath;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 }

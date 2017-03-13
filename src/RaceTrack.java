@@ -1,9 +1,5 @@
-//import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 //Ricardo Salguero
@@ -13,31 +9,26 @@ public class RaceTrack {
 
     Car[] cars = new Car[numCars];
 
-    Car[] car;
-
-    //This is just one full square path, break it up into 4 paths and name them, A, B, C, D
-
-
     PathElement[] pathAtoB = {
             new MoveTo(0, 300),
             new ArcTo(100, 100, 0, 100, 400, false, false),
             new LineTo(300, 400),
-};
-  PathElement[] pathBtoC = {
+    };
+    PathElement[] pathBtoC = {
           new MoveTo(300, 400),
           new ArcTo(100, 100, 0, 400, 300, false, false),
           new LineTo(400, 100),
-  };
-  PathElement[] pathCtoD = {
+    };
+    PathElement[] pathCtoD = {
         new MoveTo(400,100),
         new ArcTo(100, 100, 0, 300, 0, false, false),
         new LineTo(100, 0),
-};
-  PathElement[] pathDtoA = {
+    };
+    PathElement[] pathDtoA = {
         new MoveTo(100,0),
         new ArcTo(100, 100, 0, 0, 100, false, false),
         new LineTo(0, 300),
-};
+    };
 
     Path road = new Path();
     Path divider = new Path();
@@ -62,6 +53,7 @@ public class RaceTrack {
             divider.getElements().addAll(pathDtoA);
 
             Car userCar = new Car(carColor, carWheel);
+            randomStops(userCar);
             cars[0] = userCar;
         }
         else{
@@ -84,14 +76,35 @@ public class RaceTrack {
         return cars;
     }
 
-    public List randomStops(){
-        int i = 4;
-        List list = new ArrayList();
-        while (i >= 0){
-            int random = new Random().nextInt(i);
-            list.add(random);
-            i--;
+    //creates a random list from 0-4, 0 = AtoB , 1 = BtoC, 2 = CtoD, 3 = DtoA
+    public void randomStops(Car car){
+        PathElement[][] path = new PathElement[4][3];
+        int random = new Random().nextInt(4);
+        //auto assign the next stops based on what is the starting position
+        if(random == 0){
+            path[0] = pathAtoB;
+            path[1] = pathBtoC;
+            path[2] = pathCtoD;
+            path[3] = pathDtoA;
         }
-        return list;
+        else if(random == 1){
+            path[0] = pathBtoC;
+            path[1] = pathCtoD;
+            path[2] = pathDtoA;
+            path[3] = pathAtoB;
+        }
+        else if(random == 2){
+            path[0] = pathCtoD;
+            path[1] = pathDtoA;
+            path[2] = pathAtoB;
+            path[3] = pathBtoC;
+        }
+        else{
+            path[0] = pathDtoA;
+            path[0] = pathAtoB;
+            path[0] = pathBtoC;
+            path[0] = pathCtoD;
+        }
+        car.setTravelPath(path);
     }
 }
