@@ -7,15 +7,13 @@ import java.util.*;
 import java.util.List;
 
 public class Car extends ImageView{
-
     private long timeNow;
+    private long timeEnd;
     private int speed;
     private PathElement[][] travelPath;
     private String wheels;
     private String body;
     private String engine;
-    public int currentStop = 0;
-
 
     public Car(String body, String wheels ) {
         super();
@@ -79,12 +77,17 @@ public class Car extends ImageView{
     }
 
     //I hope saw two versions
-    public void Time(long timeNow ){
+    public long TimeNow(){
         timeNow = System.currentTimeMillis();
-        //long lnSystemTime = System.currentTimeMillis();
-        //System.out.println("Time: " + lnSystemTime);
-        System.out.println("Time: " + timeNow);
+        return timeNow;
+    }
 
+    public long TimeEnd(){
+        timeEnd = System.currentTimeMillis();
+        return timeEnd;
+    }
+    public long getTimeNow() {
+        return timeNow;
     }
 
     public void setTravelPath(PathElement[][] travelPath) {
@@ -99,11 +102,4 @@ public class Car extends ImageView{
         return speed;
     }
 
-    public int getCurrentStop() {
-        return currentStop;
-    }
-
-    public void setCurrentStop(int currentStop) {
-        this.currentStop = currentStop;
-    }
 }

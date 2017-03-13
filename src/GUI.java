@@ -1,6 +1,7 @@
 import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
+import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,12 +9,17 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.TextArea;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -99,10 +105,25 @@ public class GUI extends Application {
         else{
             primaryStage.close();
         }
+        TextArea timerPanel = new TextArea();
+        timerPanel.appendText("UserCar: ");
         //get road path from Racetrack and place into the animation
         Path road = raceTrack.getRoad();
-        PathTransition anim = raceTrack.createAnim(0);
-        anim.play();
+        PathTransition[] anim = raceTrack.createAnim(0);
+        //play the animation from stop 1 through stop 4
+        SequentialTransition st = new SequentialTransition(anim[0]);
+        RaceTrack finalRaceTrack1 = raceTrack;
+        long startTime = 0;
+        long finalStartTime = startTime;
+        //get the car time stamp and when animation finishes it will subtract the current time with starting
+        st.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timerPanel.appendText(Long.toString((finalRaceTrack1.getCars()[0].TimeEnd() - finalRaceTrack1.getCars()[0].getTimeNow()) / 1000));
+            }
+        });
+        st.play();
+        raceTrack.getCars()[0].TimeNow();
 
 
         //get the divider from RaceTrack and added to the scene
@@ -111,6 +132,7 @@ public class GUI extends Application {
         root.getChildren().addAll(road, divider,raceTrack.getCars()[0]);
         root.setTranslateX(50);
         root.setTranslateY(50);
+        root.setStyle("-fx-background-color: coral");
 
         GridPane mainPane = new GridPane();
         HBox buttonPanel = new HBox();
@@ -131,7 +153,8 @@ public class GUI extends Application {
         buttonPanel.setStyle("-fx-padding: 60px");
         mainPane.add(root,0,0);
         mainPane.add(buttonPanel,3,1);
-        Scene scene = new Scene(mainPane, 1000, 1000, Color.DARKGREEN);
+        mainPane.add(timerPanel,4,1);
+        Scene scene = new Scene(mainPane, 1500, 1000);
 
         primaryStage.setTitle("RaceTrack");
         primaryStage.setScene(scene);
