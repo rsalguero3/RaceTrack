@@ -12,7 +12,7 @@ public class Car extends ImageView{
     private String body;
     private String engine;
 
-    //Shivanie-moved the car to the constructor...chaged to serve class not car object
+
     public Car(String body, String wheels ) {
         super();
         if (body == "Red" && wheels == "Small")
@@ -31,6 +31,18 @@ public class Car extends ImageView{
         }
         else if(body == "Red" && wheels == "Big"){
             this.setImage(new Image("redSuv.png"));
+            this.setX(-this.getImage().getWidth() / 2);
+            this.setY(300 - this.getImage().getHeight());
+            this.setRotate(180);
+        }
+        else if (body == "Black" && wheels == "Small"){
+            this.setImage(new Image("blackCar.png"));
+            this.setX(-this.getImage().getWidth() / 2);
+            this.setY(300 - this.getImage().getHeight());
+            this.setRotate(180);
+        }
+        else if(body == "Black" && wheels == "Big") {
+            this.setImage(new Image("blackSuv.png"));
             this.setX(-this.getImage().getWidth() / 2);
             this.setY(300 - this.getImage().getHeight());
             this.setRotate(180);
@@ -62,6 +74,7 @@ public class Car extends ImageView{
         this.engine = engine;
     }
 
+    //I hope saw two versions
     public void Time(long time ){
         long timeNow = System.currentTimeMillis();
         //long lnSystemTime = System.currentTimeMillis();
