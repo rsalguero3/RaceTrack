@@ -129,7 +129,7 @@ public class GUI extends Application {
         //get the divider from RaceTrack and added to the scene
         Path divider = raceTrack.getDivider();
         Group root = new Group();
-        root.getChildren().addAll(road, divider,raceTrack.getCars()[0]);
+        root.getChildren().addAll(road, divider,raceTrack.getCars()[1]);
         root.setTranslateX(50);
         root.setTranslateY(50);
         root.setStyle("-fx-background-color: coral");

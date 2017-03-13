@@ -14,9 +14,8 @@ import java.util.Random;
 //Ricardo Salguero
 public class RaceTrack {
     //Will hold 4 Car objects
-    int numCars = 4;
 
-    Car[] cars = new Car[numCars];
+    Car[] cars = new Car[4];
 
     PathElement[] pathAtoB = {
             new MoveTo(0, 300),
@@ -63,6 +62,8 @@ public class RaceTrack {
             divider.getElements().addAll(pathCtoD);
             divider.getElements().addAll(pathDtoA);
 
+
+
             Car userCar = new Car(carColor, carWheel);
             randomStops(userCar);
             cars[0] = userCar;
@@ -78,8 +79,13 @@ public class RaceTrack {
             Car robotCar3 = new Car(carColor, carWheel);
             cars[3] = robotCar3;
             randomStops(robotCar3);
+<<<<<<< HEAD
 
         } else {
+=======
+        }
+        else{
+>>>>>>> update
 
             //TODO: create a circle track
         }
