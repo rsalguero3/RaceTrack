@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 //import javafx.scene.image.Image;
@@ -20,20 +21,69 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-
-/* Mike was here */
-
-/**
- * Created by rsalguero on 2/24/17.
- */
+//Ricardo Salguero
 public class GUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         RaceTrack raceTrack = null;
-        //TODO: Move this into the Car class and create constructors with 3 String inputs
-        //and set Image depending on those strings, The 3 Strings will be wheels, engine, body
-        Car car = new Car("Red","Small");
+        String wheelChoice = null;
+        String colorChoice = null;
+        String engineChoice = null;
+
+        //pop up window will let user pick Car Color
+        List<String> bodyColor = new ArrayList<>();
+        bodyColor.add("Red");
+        bodyColor.add("Blue");
+        bodyColor.add("Black");
+
+        ChoiceDialog<String> carColorChoice = new ChoiceDialog<>("Red", bodyColor);
+        carColorChoice.setTitle("Chose Car Color");
+        carColorChoice.setHeaderText("Race Track");
+        carColorChoice.setContentText("Choose your Color:");
+
+        Optional<String> carColor = carColorChoice.showAndWait();
+        if (carColor.isPresent()){
+            colorChoice = carColor.get();
+        }
+        else{
+            primaryStage.close();
+        }
+
+        //pop up window will let user pick Car engine
+        List<String> engine = new ArrayList<>();
+        engine.add("Turbo");
+        engine.add("SuperCharger");
+
+        ChoiceDialog<String> carEngineChoice = new ChoiceDialog<>("Turbo", engine);
+        carEngineChoice.setTitle("Chose Car Engine");
+        carEngineChoice.setHeaderText("Race Track");
+        carEngineChoice.setContentText("Choose your Engine:");
+
+        Optional<String> carEngine = carEngineChoice.showAndWait();
+        if (carEngine.isPresent()){
+            engineChoice = carEngine.get();
+        }
+        else{
+            primaryStage.close();
+        }
+
+        //pop up window will let user pick Car
+        List<String> wheel = new ArrayList<>();
+        wheel.add("Small");
+        wheel.add("Big");
+
+        ChoiceDialog<String> carWheelChoice = new ChoiceDialog<>("Small", wheel);
+        carWheelChoice.setTitle("Chose Car Color");
+        carWheelChoice.setHeaderText("Race Track");
+        carWheelChoice.setContentText("Choose your Color:");
+
+        Optional<String> carWheel = carWheelChoice.showAndWait();
+        if (carWheel.isPresent()){
+            wheelChoice = carWheel.get();
+        }
+        else{
+            primaryStage.close();
+        }
 
         //pop up window will let user pick raceTrack
         List<String> choices = new ArrayList<>();
@@ -47,7 +97,7 @@ public class GUI extends Application {
 
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
-            raceTrack = new RaceTrack(result.get());
+            raceTrack = new RaceTrack(result.get(), colorChoice, wheelChoice);
         }
         else{
             primaryStage.close();
@@ -56,7 +106,7 @@ public class GUI extends Application {
         //get road path from Racetrack and place into the animation
         Path road = raceTrack.getRoad();
         PathTransition anim = new PathTransition();
-        anim.setNode(car);
+        anim.setNode(raceTrack.getCars()[0]);
         anim.setPath(road);
         anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         anim.setInterpolator(Interpolator.LINEAR);
@@ -69,7 +119,7 @@ public class GUI extends Application {
         //get the divider from RaceTrack and added to the scene
         Path divider = raceTrack.getDivider();
         Group root = new Group();
-        root.getChildren().addAll(road, divider,car);
+        root.getChildren().addAll(road, divider,raceTrack.getCars()[0]);
         root.setTranslateX(50);
         root.setTranslateY(50);
 
@@ -77,10 +127,12 @@ public class GUI extends Application {
         HBox buttonPanel = new HBox();
         Button start = new Button("Start");
         Button pause = new Button("Pause");
+        RaceTrack finalRaceTrack = raceTrack;
         start.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent event) {
                     anim.play();
+                    finalRaceTrack.randomStops();
             }
         });
         pause.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
@@ -102,6 +154,9 @@ public class GUI extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+
+
     public static void main(String[] args) {
         Application.launch(args);
     }
