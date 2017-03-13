@@ -59,10 +59,6 @@ public class Car extends ImageView{
 
     }
     public void setSpeed(int speed) {
-        Random randomNum = new Random();
-        int ranNum;
-        ranNum = randomNum.nextInt(26) + 5;
-        this.speed += ranNum;
 
         this.speed = speed;
     }
