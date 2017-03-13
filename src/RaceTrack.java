@@ -1,4 +1,4 @@
-import javafx.scene.image.ImageView;
+//import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
@@ -8,9 +8,15 @@ import java.util.Random;
 
 //Ricardo Salguero
 public class RaceTrack {
-    int numCars = 4;
     //Will hold 4 Car objects
+    int numCars = 4;
+
     Car[] cars = new Car[numCars];
+
+    Car[] car;
+
+    //This is just one full square path, break it up into 4 paths and name them, A, B, C, D
+
 
     PathElement[] pathAtoB = {
             new MoveTo(0, 300),

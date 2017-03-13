@@ -1,5 +1,6 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.util.*;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Car extends ImageView{
     private String body;
     private String engine;
 
-    //Shivanie-moved the car to the constructor...chaged to serve class not car object
+
     public Car(String body, String wheels ) {
         super();
         if (body == "Red" && wheels == "Small")
@@ -20,32 +21,48 @@ public class Car extends ImageView{
             this.setImage(new Image("redCar.png"));
             this.setX(-this.getImage().getWidth() / 2);
             this.setY(300 - this.getImage().getHeight());
-            this.setRotate(180);
+            this.setRotate(90);
         }
         else if(body == "Blue" && wheels == "Small")
         {
             this.setImage(new Image ("blueCar.png"));
             this.setX(-this.getImage().getWidth() / 2);
             this.setY(300 - this.getImage().getHeight());
-            this.setRotate(180);
+            this.setRotate(90);
         }
         else if(body == "Red" && wheels == "Big"){
             this.setImage(new Image("redSuv.png"));
             this.setX(-this.getImage().getWidth() / 2);
             this.setY(300 - this.getImage().getHeight());
-            this.setRotate(180);
+            this.setRotate(90);
+        }
+        else if (body == "Black" && wheels == "Small"){
+            this.setImage(new Image("blackCar.png"));
+            this.setX(-this.getImage().getWidth() / 2);
+            this.setY(300 - this.getImage().getHeight());
+            this.setRotate(90);
+        }
+        else if(body == "Black" && wheels == "Big") {
+            this.setImage(new Image("blackSuv.png"));
+            this.setX(-this.getImage().getWidth() / 2);
+            this.setY(300 - this.getImage().getHeight());
+            this.setRotate(90);
         }
         else{
             this.setImage(new Image("blueSuv.png"));
             this.setX(-this.getImage().getWidth() / 2);
             this.setY(300 - this.getImage().getHeight());
-            this.setRotate(180);
+            this.setRotate(90);
         }
 
 
 
     }
     public void setSpeed(int speed) {
+        Random randomNum = new Random();
+        int ranNum;
+        ranNum = randomNum.nextInt(26) + 5;
+        this.speed += ranNum;
 
         this.speed = speed;
     }
@@ -62,8 +79,9 @@ public class Car extends ImageView{
         this.engine = engine;
     }
 
-    public void Time(long time ){
-        long timeNow = System.currentTimeMillis();
+    //I hope saw two versions
+    public void Time(long timeNow ){
+        timeNow = System.currentTimeMillis();
         //long lnSystemTime = System.currentTimeMillis();
         //System.out.println("Time: " + lnSystemTime);
         System.out.println("Time: " + timeNow);
