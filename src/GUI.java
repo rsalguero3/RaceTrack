@@ -2,25 +2,20 @@ import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
-//import javafx.scene.image.Image;
-//import javafx.scene.image.ImageView;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 //Ricardo Salguero
 public class GUI extends Application {
     @Override
@@ -107,12 +102,17 @@ public class GUI extends Application {
         Path road = raceTrack.getRoad();
         PathTransition anim = new PathTransition();
         anim.setNode(raceTrack.getCars()[0]);
-        anim.setPath(road);
+        Path carPath = new Path();
+        //for loop to get all the path elements and create one animation from one stop to another
+        for(int i = 0; i < 3; i++){
+            carPath.getElements().addAll(raceTrack.getCars()[0].getTravelPath()[0][i]);
+        }
+        anim.setPath(carPath);
         anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         anim.setInterpolator(Interpolator.LINEAR);
 
         //Car class will have randomSpeed method that will return a speed in milliseconds
-        anim.setDuration(new Duration(6000));
+        anim.setDuration(new Duration(raceTrack.getCars()[0].getSpeed()));
         //complete the path only once
         anim.setCycleCount(1);
 
@@ -130,7 +130,6 @@ public class GUI extends Application {
         RaceTrack finalRaceTrack = raceTrack;
         start.setOnAction(event -> {
                 anim.play();
-                finalRaceTrack.randomStops();
         });
         pause.setOnAction(event -> {
             Animation.Status status = anim.getStatus();
