@@ -5,7 +5,7 @@ import javafx.scene.shape.PathElement;
 import java.util.*;
 
 import java.util.List;
-//test
+
 public class Car extends ImageView{
 
     private long timeNow;
