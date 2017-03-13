@@ -73,9 +73,9 @@ public class GUI extends Application {
         wheel.add("Big");
 
         ChoiceDialog<String> carWheelChoice = new ChoiceDialog<>("Small", wheel);
-        carWheelChoice.setTitle("Chose Car Color");
+        carWheelChoice.setTitle("Choose your wheel Size");
         carWheelChoice.setHeaderText("Race Track");
-        carWheelChoice.setContentText("Choose your Color:");
+        carWheelChoice.setContentText("Choose your Wheel size:");
 
         Optional<String> carWheel = carWheelChoice.showAndWait();
         if (carWheel.isPresent()){
@@ -128,21 +128,15 @@ public class GUI extends Application {
         Button start = new Button("Start");
         Button pause = new Button("Pause");
         RaceTrack finalRaceTrack = raceTrack;
-        start.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
-            @Override
-            public void handle(javafx.event.ActionEvent event) {
-                    anim.play();
-                    finalRaceTrack.randomStops();
-            }
+        start.setOnAction(event -> {
+                anim.play();
+                finalRaceTrack.randomStops();
         });
-        pause.setOnAction(new EventHandler<javafx.event.ActionEvent>() {
-            @Override
-            public void handle(javafx.event.ActionEvent event) {
-                Animation.Status status = anim.getStatus();
-                if (status == Animation.Status.RUNNING &&
-                        status != Animation.Status.PAUSED)
-                    anim.pause();
-            }
+        pause.setOnAction(event -> {
+            Animation.Status status = anim.getStatus();
+            if (status == Animation.Status.RUNNING &&
+                    status != Animation.Status.PAUSED)
+                anim.pause();
         });
         buttonPanel.getChildren().addAll(start, pause);
         buttonPanel.setStyle("-fx-padding: 60px");
