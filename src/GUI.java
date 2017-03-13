@@ -2,6 +2,8 @@ import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -97,24 +99,11 @@ public class GUI extends Application {
         else{
             primaryStage.close();
         }
-
         //get road path from Racetrack and place into the animation
         Path road = raceTrack.getRoad();
-        PathTransition anim = new PathTransition();
-        anim.setNode(raceTrack.getCars()[0]);
-        Path carPath = new Path();
-        //for loop to get all the path elements and create one animation from one stop to another
-        for(int i = 0; i < 3; i++){
-            carPath.getElements().addAll(raceTrack.getCars()[0].getTravelPath()[0][i]);
-        }
-        anim.setPath(carPath);
-        anim.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        anim.setInterpolator(Interpolator.LINEAR);
+        PathTransition anim = raceTrack.createAnim(0);
+        anim.play();
 
-        //Car class will have randomSpeed method that will return a speed in milliseconds
-        anim.setDuration(new Duration(raceTrack.getCars()[0].getSpeed()));
-        //complete the path only once
-        anim.setCycleCount(1);
 
         //get the divider from RaceTrack and added to the scene
         Path divider = raceTrack.getDivider();
@@ -128,7 +117,7 @@ public class GUI extends Application {
         Button start = new Button("Start");
         Button pause = new Button("Pause");
         RaceTrack finalRaceTrack = raceTrack;
-        start.setOnAction(event -> {
+        /*start.setOnAction(event -> {
                 anim.play();
         });
         pause.setOnAction(event -> {
@@ -137,6 +126,7 @@ public class GUI extends Application {
                     status != Animation.Status.PAUSED)
                 anim.pause();
         });
+        */
         buttonPanel.getChildren().addAll(start, pause);
         buttonPanel.setStyle("-fx-padding: 60px");
         mainPane.add(root,0,0);

@@ -14,6 +14,7 @@ public class Car extends ImageView{
     private String wheels;
     private String body;
     private String engine;
+    public int currentStop = 0;
 
 
     public Car(String body, String wheels ) {
@@ -96,5 +97,13 @@ public class Car extends ImageView{
 
     public int getSpeed() {
         return speed;
+    }
+
+    public int getCurrentStop() {
+        return currentStop;
+    }
+
+    public void setCurrentStop(int currentStop) {
+        this.currentStop = currentStop;
     }
 }
