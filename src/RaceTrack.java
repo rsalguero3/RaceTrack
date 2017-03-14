@@ -1,20 +1,14 @@
-import javafx.animation.Animation;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.util.Duration;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 //Ricardo Salguero
 public class RaceTrack {
     //Will hold 4 Car objects
-
+    String trackName;
     Car[] cars = new Car[4];
 
     PathElement[] pathAtoB = {
@@ -38,6 +32,28 @@ public class RaceTrack {
             new LineTo(0, 300),
     };
 
+    //second Track
+    PathElement[] secondpathAtoB = {
+            new MoveTo(0, 300),
+            new QuadCurveTo(0,50,100,200),
+            new LineTo(300, 400),
+    };
+    PathElement[] secondpathBtoC = {
+            new MoveTo(300, 400),
+            new ArcTo(100, 100, 0, 400, 300, false, false),
+            new LineTo(400, 100),
+    };
+    PathElement[] secondpathCtoD = {
+            new MoveTo(400, 100),
+            new CubicCurveTo(100,30,20,20,40,40),
+            new LineTo(100, 0),
+    };
+    PathElement[] secondpathDtoA = {
+            new MoveTo(100, 0),
+            new QuadCurveTo(100,100,100,100),
+            new LineTo(0, 300),
+    };
+
     Path road;
     Path divider;
 
@@ -45,7 +61,8 @@ public class RaceTrack {
     public RaceTrack(String trackName, String carColor, String carWheel) {
         road = new Path();
         divider = new Path();
-        if (trackName == "Square") {
+        if (trackName == "Track 1") {
+            this.trackName = trackName;
             //initializing the painting of the road
             road.setStroke(Color.BLACK);
             road.setStrokeWidth(75);
@@ -62,32 +79,56 @@ public class RaceTrack {
             divider.getElements().addAll(pathCtoD);
             divider.getElements().addAll(pathDtoA);
 
+            Car userCar = new Car(carColor, carWheel);
+            randomStops(userCar);
+            cars[0] = userCar;
 
+            Car robotCar1 = new Car(carColor, carWheel);
+            randomStops(robotCar1);
+            cars[1] = robotCar1;
+
+            Car robotCar2 = new Car(carColor, carWheel);
+            randomStops(robotCar2);
+            cars[2] = robotCar2;
+
+            Car robotCar3 = new Car(carColor, carWheel);
+            randomStops(robotCar3);
+            cars[3] = robotCar3;
+
+        }
+        else {
+            this.trackName = trackName;
+            //initializing the painting of the road
+            road.setStroke(Color.BLACK);
+            road.setStrokeWidth(75);
+            road.getElements().addAll(secondpathAtoB);
+            road.getElements().addAll(secondpathBtoC);
+            road.getElements().addAll(secondpathCtoD);
+            road.getElements().addAll(secondpathDtoA);
+            //setting white dividers on the black path.
+            divider.setStroke(Color.WHITE);
+            divider.setStrokeWidth(4);
+            divider.getStrokeDashArray().addAll(10.0, 10.0);
+            divider.getElements().addAll(secondpathAtoB);
+            divider.getElements().addAll(secondpathBtoC);
+            divider.getElements().addAll(secondpathCtoD);
+            divider.getElements().addAll(secondpathDtoA);
 
             Car userCar = new Car(carColor, carWheel);
             randomStops(userCar);
             cars[0] = userCar;
 
             Car robotCar1 = new Car(carColor, carWheel);
-            cars[1] = robotCar1;
             randomStops(robotCar1);
+            cars[1] = robotCar1;
 
             Car robotCar2 = new Car(carColor, carWheel);
-            cars[2] = robotCar2;
             randomStops(robotCar2);
+            cars[2] = robotCar2;
 
             Car robotCar3 = new Car(carColor, carWheel);
-            cars[3] = robotCar3;
             randomStops(robotCar3);
-<<<<<<< HEAD
-
-        } else {
-=======
-        }
-        else{
->>>>>>> update
-
-            //TODO: create a circle track
+            cars[3] = robotCar3;
         }
 
 
@@ -110,31 +151,60 @@ public class RaceTrack {
         PathElement[][] path = new PathElement[4][3];
         int random = new Random().nextInt(4);
         //auto assign the next stops based on what is the starting position
-        if (random == 0) {
-            path[0] = pathAtoB;
-            path[1] = pathBtoC;
-            path[2] = pathCtoD;
-            path[3] = pathDtoA;
+        if (trackName == "Track 1") {
+            if (random == 0) {
+                path[0] = pathAtoB;
+                path[1] = pathBtoC;
+                path[2] = pathCtoD;
+                path[3] = pathDtoA;
+            }
+            if (random == 1) {
+                path[0] = pathBtoC;
+                path[1] = pathCtoD;
+                path[2] = pathDtoA;
+                path[3] = pathAtoB;
+            }
+            if (random == 2) {
+                path[0] = pathCtoD;
+                path[1] = pathDtoA;
+                path[2] = pathAtoB;
+                path[3] = pathBtoC;
+            }
+            if (random == 3) {
+                path[0] = pathDtoA;
+                path[1] = pathAtoB;
+                path[2] = pathBtoC;
+                path[3] = pathCtoD;
+            }
+            car.setTravelPath(path);
         }
-        if (random == 1) {
-            path[0] = pathBtoC;
-            path[1] = pathCtoD;
-            path[2] = pathDtoA;
-            path[3] = pathAtoB;
+        if(trackName == "Track 2"){
+            if (random == 0) {
+                path[0] = secondpathAtoB;
+                path[1] = secondpathBtoC;
+                path[2] = secondpathCtoD;
+                path[3] = secondpathDtoA;
+            }
+            if (random == 1) {
+                path[0] = secondpathBtoC;
+                path[1] = secondpathCtoD;
+                path[2] = secondpathDtoA;
+                path[3] = secondpathAtoB;
+            }
+            if (random == 2) {
+                path[0] = secondpathCtoD;
+                path[1] = secondpathDtoA;
+                path[2] = secondpathAtoB;
+                path[3] = secondpathBtoC;
+            }
+            if (random == 3) {
+                path[0] = secondpathDtoA;
+                path[1] = secondpathAtoB;
+                path[2] = secondpathBtoC;
+                path[3] = secondpathCtoD;
+            }
+            car.setTravelPath(path);
         }
-        if (random == 2) {
-            path[0] = pathCtoD;
-            path[1] = pathDtoA;
-            path[2] = pathAtoB;
-            path[3] = pathBtoC;
-        }
-        if (random == 3) {
-            path[0] = pathDtoA;
-            path[1] = pathAtoB;
-            path[2] = pathBtoC;
-            path[3] = pathCtoD;
-        }
-        car.setTravelPath(path);
     }
 
     public PathTransition[] createAnim(int car) {

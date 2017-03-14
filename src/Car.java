@@ -1,10 +1,7 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.PathElement;
-
 import java.util.*;
-
-import java.util.List;
 
 public class Car extends ImageView{
     private long timeNow;
@@ -15,10 +12,7 @@ public class Car extends ImageView{
     private String body;
     private String engine;
 
-<<<<<<< HEAD
-=======
     //Shivanie Hariram
->>>>>>> update
     public Car(String body, String wheels ) {
         super();
         if (body == "Red" && wheels == "Small")
@@ -80,21 +74,10 @@ public class Car extends ImageView{
         this.engine = engine;
     }
 
-<<<<<<< HEAD
-    //I hope saw two versions
     public long TimeNow(){
         timeNow = System.currentTimeMillis();
         return timeNow;
     }
-=======
-    public void setTimeNow(){
-        this.timeNow = System.currentTimeMillis();
-        /*
-        long lnSystemTime = System.currentTimeMillis();
-        System.out.println("Time: " + lnSystemTime);
-        */
-        System.out.println("Time: " + timeNow);
->>>>>>> update
 
     public long TimeEnd(){
         timeEnd = System.currentTimeMillis();

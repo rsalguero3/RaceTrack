@@ -1,5 +1,3 @@
-import javafx.animation.Animation;
-import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
@@ -10,16 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextArea;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -90,10 +82,10 @@ public class GUI extends Application {
 
         //pop up window will let user pick raceTrack
         List<String> choices = new ArrayList<>();
-        choices.add("Square");
-        choices.add("Circle");
+        choices.add("Track 1");
+        choices.add("Track 2");
 
-        ChoiceDialog<String> dialog = new ChoiceDialog<>("Square", choices);
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("Track 1", choices);
         dialog.setTitle("Race Track");
         dialog.setHeaderText("Race Track");
         dialog.setContentText("Choose your Track:");
@@ -106,12 +98,17 @@ public class GUI extends Application {
             primaryStage.close();
         }
         TextArea timerPanel = new TextArea();
-        timerPanel.appendText("UserCar: ");
         //get road path from Racetrack and place into the animation
         Path road = raceTrack.getRoad();
         PathTransition[] anim = raceTrack.createAnim(0);
-        //play the animation from stop 1 through stop 4
+        PathTransition[] anim1 = raceTrack.createAnim(1);
+        PathTransition[] anim2 = raceTrack.createAnim(2);
+        PathTransition[] anim3 = raceTrack.createAnim(3);
+        //play the animation from stop 1 through stop 4 for each car
         SequentialTransition st = new SequentialTransition(anim[0]);
+        SequentialTransition st1 = new SequentialTransition(anim1[0]);
+        SequentialTransition st2 = new SequentialTransition(anim2[0]);
+        SequentialTransition st3 = new SequentialTransition(anim3[0]);
         RaceTrack finalRaceTrack1 = raceTrack;
         long startTime = 0;
         long finalStartTime = startTime;
@@ -119,17 +116,49 @@ public class GUI extends Application {
         st.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                timerPanel.appendText(Long.toString((finalRaceTrack1.getCars()[0].TimeEnd() - finalRaceTrack1.getCars()[0].getTimeNow()) / 1000));
+                timerPanel.appendText("UserCar Time: " + Long.toString((finalRaceTrack1.getCars()[0].TimeEnd() -
+                        finalRaceTrack1.getCars()[0].getTimeNow()) / 1000)
+                + "\n");
+            }
+        });
+        st1.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timerPanel.appendText("Car 1 Time: " + Long.toString((finalRaceTrack1.getCars()[1].TimeEnd() -
+                        finalRaceTrack1.getCars()[1].getTimeNow()) / 1000) + "\n");
+            }
+        });
+        st2.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timerPanel.appendText("Car 2 Time: " + Long.toString((finalRaceTrack1.getCars()[2].TimeEnd() -
+                        finalRaceTrack1.getCars()[2].getTimeNow()) / 1000) + "\n");
+            }
+        });
+        st3.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timerPanel.appendText("Car 3 Time: " + Long.toString((finalRaceTrack1.getCars()[3].TimeEnd() -
+                        finalRaceTrack1.getCars()[3].getTimeNow()) / 1000) + "\n");
             }
         });
         st.play();
+        st1.play();
+        st2.play();
+        st3.play();
+        //Start the car timer
         raceTrack.getCars()[0].TimeNow();
+        raceTrack.getCars()[1].TimeNow();
+        raceTrack.getCars()[2].TimeNow();
+        raceTrack.getCars()[3].TimeNow();
 
 
         //get the divider from RaceTrack and added to the scene
         Path divider = raceTrack.getDivider();
         Group root = new Group();
-        root.getChildren().addAll(road, divider,raceTrack.getCars()[1]);
+        //place all the track pieces into root
+        root.getChildren().addAll(road, divider,raceTrack.getCars()[0], raceTrack.getCars()[1],
+                raceTrack.getCars()[2], raceTrack.getCars()[3]);
         root.setTranslateX(50);
         root.setTranslateY(50);
         root.setStyle("-fx-background-color: coral");
