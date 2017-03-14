@@ -161,7 +161,6 @@ public class GUI extends Application {
                 raceTrack.getCars()[2], raceTrack.getCars()[3]);
         root.setTranslateX(50);
         root.setTranslateY(50);
-        root.setStyle("-fx-background-color: coral");
 
         GridPane mainPane = new GridPane();
         HBox buttonPanel = new HBox();
